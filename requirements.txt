@@ -1,0 +1,6 @@
+langgraph>=0.2.0
+langchain_google_genai>=0.1.0
+google-generativeai>=0.3.0
+python-dotenv>=1.0.0
+streamlit>=1.29.0
+typing_extensions>=4.9.0
