@@ -9,7 +9,7 @@ def main():
     # 1) Load environment variables (GEMINI_API_KEY)
     load_dotenv()
 
-    st.title("👋 Agentia Hello World (Gemini 2.0)")
+    st.title("👋 Agentia Hello World")
 
     st.markdown("""
     **Flow**:
