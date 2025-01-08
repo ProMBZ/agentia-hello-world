@@ -1,45 +1,33 @@
-# Agentia Hello World with Gemini 2.0
+# Agentia Hello World with Gemini 2.0, LangGraph, and Streamlit
 
-This is a minimal “Hello World” multi-agent project using:
+A minimal, 2-agent “Hello World” that handles multilingual greetings and a special "assalamu alaikum" case using Google's Gemini 2.0 (via `langchain_google_genai`).
 
-- **LangGraph** for the conceptual flow (two agents: front-end + greeting).
-- **Gemini 2.0** (via `langchain_google_genai`) for multilingual greeting detection.
-- **Streamlit** for a simple user interface that only shows the final agent response.
+## Files
 
-## Project Structure
+- **.env**  
+  Contains `GEMINI_API_KEY=your_key`. Not committed to source control.
 
-```plaintext
-hello_world/
-  ├─ .env
-  ├─ greeting_agent.py
-  ├─ front_end_agent.py
-  ├─ graph_definition.py
-  ├─ app.py
-  └─ README.md
+- **greeting_agent.py**  
+  A specialized agent that uses `ChatGoogleGenerativeAI` to respond to greetings in any language.
 
+- **front_end_agent.py**  
+  A front-end orchestration agent that delegates to `greeting_agent.py`.
 
-## Summary of “What’s Happening in the Back”
+- **graph_definition.py**  
+  Shows a `StateGraph` with two nodes: "front_end_agent" and "greeting_agent", connected from `START` to `END`.  
+  We do **not** call `.build()` or `runner.run()`, so no version conflicts.
 
-When a user types text in **Streamlit** (`app.py`):
+- **app.py**  
+  A `streamlit` web app that:
+  1. Loads `.env`,
+  2. Lets the user type a greeting,
+  3. Displays only the single final response from the greeting agent.
 
-1. The **Front-End Orchestration Agent** (`front_end_agent.py`) receives the input.  
-2. It delegates the text to the **Greeting Agent** (`greeting_agent.py`), which:
-   - Sends a system prompt and the user’s message as **chat messages** to **Gemini 2.0**.  
-   - Gemini checks if it’s a special “assalamu alaikum,” or any other greeting, or something else.  
-   - Returns a **friendly** greeting in the same language (or fallback in English).  
-3. The **Front-End** returns that single final response to the user.  
-4. We only display that response in **Streamlit**, **no** repeated logs or conversation lines.
+- **requirements.txt**  
+  Lists all packages required, ensuring no “module not found” errors.
 
-Meanwhile, `graph_definition.py` shows how you would conceptualize the conversation flow using LangGraph’s `node`, `START`, and `END`, but we do **not** call `run()`—we do everything manually in `app.py`.
+## Setup & Run
 
----
-
-### Enjoy Your Multi-Agent Project!
-
-You now have:
-
-- **Two Agents** (Front-End, Greeting).  
-- **LangGraph** conceptual flow.  
-- **Gemini 2.0** for multilingual greeting logic.  
-- **Streamlit** front-end that shows **only** the final answer.  
-- A **README** clarifying how it all works and how to run the project!
+1. **Install** dependencies in a **fresh** virtual environment:
+   ```bash
+   pip install -r requirements.txt
